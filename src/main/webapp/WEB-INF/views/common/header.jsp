@@ -55,7 +55,7 @@
                     <a href="/questions" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Questions</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="#" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Tags</a>
+                    <a href="${pageContext.request.contextPath}/tag/show-all" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Tags</a>
                 </li>
                 <li class="nav-item mr-3">
                     <a href="#" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Users</a>
