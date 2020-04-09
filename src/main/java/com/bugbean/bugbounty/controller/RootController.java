@@ -107,6 +107,7 @@ public class RootController extends BaseService {
             user.setGender("M");
             user.setEmail("admin@gmail.com");
             user.setXp(50);
+            user.setPropic("noavatar.jpg");
             user.setEnabled(true);
             user.setDob(LocalDate.now());
             Set<Authority> authorities = new HashSet<>();
@@ -123,6 +124,7 @@ public class RootController extends BaseService {
             user.setGender("M");
             user.setEmail("user@gmail.com");
             user.setXp(50);
+            user.setPropic("noavatar.jpg");
             user.setEnabled(true);
             user.setDob(LocalDate.now());
             Set<Authority> authorities = new HashSet<>();

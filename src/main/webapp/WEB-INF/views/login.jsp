@@ -34,14 +34,14 @@
                     <input
                             type="text" class="form-control" id="username"
                             aria-describedby="emailHelp" placeholder="Username"
-                            value="admin"
+                            value=""
                             name="username">
                 </div>
                 <div class="form-group">
                     <label for="password" class="small font-weight-bold">Password</label>
                     <input
                             type="password" class="form-control" id="password"
-                            placeholder="Password" name="password" value="secret">
+                            placeholder="Password" name="password" value="">
                 </div>
                 <button type="submit"
                         class="btn btn-warning btn-block">Log in
