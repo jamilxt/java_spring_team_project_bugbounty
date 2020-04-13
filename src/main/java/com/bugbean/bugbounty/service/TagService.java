@@ -66,4 +66,19 @@ public class TagService implements Serializable {
         tagRepository.save(tag);
     }
 
+    public String tagString(){
+        ArrayList<String> list = new ArrayList<String>();
+        tagRepository.findAll().forEach(tag -> {
+            list.add(tag.getTag());
+        });
+
+        String listString = "";
+
+        for (String s : list)
+        {
+            listString += "'" +s+ "'" + ",";
+        }
+        return listString;
+    }
+
 }

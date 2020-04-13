@@ -9,9 +9,4 @@ import java.util.Optional;
 @Transactional
 public interface TagRepository extends JpaRepository<Tag, Long> {
     Optional<Tag> findByTag(String tag);
-    /*    @Query(value = "select tagName" +
-            " from tbl_tag t" +
-            " where t.tagName like %:keyword% "
-            , nativeQuery = true)
-    List<Tag> getTagByQueryString(@Param("keyword") String query);*/
 }

@@ -3,13 +3,11 @@ package com.bugbean.bugbounty.service;
 import com.bugbean.bugbounty.dto.AnswerDto;
 import com.bugbean.bugbounty.dto.LikeDto;
 import com.bugbean.bugbounty.dto.QuestionDto;
-import com.bugbean.bugbounty.model.Answer;
-import com.bugbean.bugbounty.model.Like;
-import com.bugbean.bugbounty.model.Question;
-import com.bugbean.bugbounty.model.User;
+import com.bugbean.bugbounty.model.*;
 import com.bugbean.bugbounty.repository.AnswerRepository;
 import com.bugbean.bugbounty.repository.LikeRepository;
 import com.bugbean.bugbounty.repository.QuestionRepository;
+import com.bugbean.bugbounty.repository.TagRepository;
 import com.bugbean.bugbounty.request.AnswerRequest;
 import com.bugbean.bugbounty.request.QuestionRequest;
 import com.bugbean.bugbounty.request.QuestionHomepageRequest;
@@ -22,10 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class QuestionService extends BaseService {
@@ -35,6 +30,8 @@ public class QuestionService extends BaseService {
     private AnswerRepository answerRepository;
     @Autowired
     private LikeRepository likeRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     public Page<Question> showAll(
             Optional<Integer> page,
@@ -93,7 +90,19 @@ public class QuestionService extends BaseService {
     public void save(QuestionDto questionDto, User user) {
         var questionEntity = new Question();
         BeanUtils.copyProperties(questionDto, questionEntity);
+        var tags = new ArrayList<String>(Arrays.asList(questionDto.getTag().split(", ")));
+        var tagList = new ArrayList<Tag>();
+        for (var t :
+                tags) {
+            var tag = tagRepository.findByTag(t);
+            if (tag.isPresent()){
+                tag.get().setTotalUsed(tag.get().getTotalUsed()+1);
+                tagRepository.save(tag.get());
+                tagList.add(tag.get());
+            }
+        }
         questionEntity.setUser(user);
+        questionEntity.setTags(tagList);
         questionRepository.save(questionEntity);
     }
 

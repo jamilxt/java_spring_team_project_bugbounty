@@ -6,6 +6,7 @@ import com.bugbean.bugbounty.model.Question;
 import com.bugbean.bugbounty.model.User;
 import com.bugbean.bugbounty.service.BaseService;
 import com.bugbean.bugbounty.service.QuestionService;
+import com.bugbean.bugbounty.service.TagService;
 import com.bugbean.bugbounty.service.UserService;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,8 @@ public class QuestionController extends BaseService {
     private QuestionService serviceQuestion;
     @Autowired
     private UserService serviceUser;
+    @Autowired
+    private TagService tagService;
 
     // LIST OF QUESTIONS
 
@@ -58,12 +61,13 @@ public class QuestionController extends BaseService {
     @GetMapping("/questions/ask")
     public String showAddQuestion(Model model) {
         model.addAttribute("pageTitle", "Ask a public question");
+        model.addAttribute("tagList", tagService.tagString());
         model.addAttribute("question", new QuestionDto());
         return "question/add";
     }
 
     @PostMapping("/questions/ask")
-    public String postQuestion(@ModelAttribute("question") Question question, @RequestParam("files") List<MultipartFile> multipartFiles) {
+    public String postQuestion(@ModelAttribute("question") QuestionDto questionDto, @RequestParam("files") List<MultipartFile> multipartFiles) {
         User userEntity = getLoggedInUser();
         List<String> questionAttachments = new ArrayList<>();
         for (MultipartFile file :
@@ -80,9 +84,7 @@ public class QuestionController extends BaseService {
                 }
             }
         }
-        question.setAttachments(questionAttachments);
-        var questionDto = new QuestionDto();
-        BeanUtils.copyProperties(question, questionDto);
+        questionDto.setAttachments(questionAttachments);
         serviceQuestion.save(questionDto, userEntity);
         return "redirect:/questions";
     }
