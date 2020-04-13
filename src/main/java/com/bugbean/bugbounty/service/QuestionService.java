@@ -95,8 +95,8 @@ public class QuestionService extends BaseService {
         for (var t :
                 tags) {
             var tag = tagRepository.findByTag(t);
-            if (tag.isPresent()){
-                tag.get().setTotalUsed(tag.get().getTotalUsed()+1);
+            if (tag.isPresent()) {
+                tag.get().setTotalUsed(tag.get().getTotalUsed() + 1);
                 tagRepository.save(tag.get());
                 tagList.add(tag.get());
             }
