@@ -45,12 +45,11 @@
                                     </c:if>
                                 </div>
                             </div>
-                            <div class="d-none">
-                                <a href="#" class="badge badge-warning p-2 mt-2">Java</a>
-                                <a href="#" class="badge badge-warning p-2 mt-2">Python</a>
-                                <a href="#" class="badge badge-warning p-2 mt-2">Spring</a>
-                                <a href="#" class="badge badge-warning p-2 mt-2">C++</a>
-                                <a href="#" class="badge badge-warning p-2 mt-2">C#</a>
+                            <div class="">
+                                <c:forEach items="${tags}" var="tag">
+                                    <a href="#" class="badge badge-warning p-2 mt-2">${tag.tag}</a>
+                                </c:forEach>
+
                             </div>
                             <div class="media text-right mt-3">
                                 <div class="media-body">
@@ -140,14 +139,16 @@
 
         <div class="col-4 pr-0">
 
-            <a href="/questions" class="btn btn-outline-light pl-4 pr-4 pt-1 pb-1 btn-block mb-4"><small class="font-weight-bold">BACK TO
+            <a href="/questions" class="btn btn-outline-light pl-4 pr-4 pt-1 pb-1 btn-block mb-4"><small
+                    class="font-weight-bold">BACK TO
                 QUESTIONS</small></a>
 
             <div class="card">
                 <div class="card-body">
 
                     <h6 class="font-weight-bold border-bottom pb-2 small">
-                        More Questions from <a href="/${singleQuestion.user.username}">${singleQuestion.user.username}</a>
+                        More Questions from <a
+                            href="/${singleQuestion.user.username}">${singleQuestion.user.username}</a>
                     </h6>
 
                     <c:forEach items="${relatedQuestions}" var="question">

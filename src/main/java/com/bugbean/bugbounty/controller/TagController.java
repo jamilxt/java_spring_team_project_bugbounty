@@ -1,4 +1,5 @@
 package com.bugbean.bugbounty.controller;
+
 import com.bugbean.bugbounty.config.exception.ResourceAlreadyExistsException;
 import com.bugbean.bugbounty.dto.TagDto;
 import com.bugbean.bugbounty.repository.TagRepository;
@@ -24,8 +25,8 @@ public class TagController implements Serializable {
     private TagRepository tagRepository;
 
     @GetMapping("/createTag")
-    public String createTag(Model model){
-        model.addAttribute("pageTitle","Create new Tag");
+    public String createTag(Model model) {
+        model.addAttribute("pageTitle", "Create new Tag");
         model.addAttribute("tagRequest", new TagRequest());
         return "tag/create";
     }
@@ -35,40 +36,40 @@ public class TagController implements Serializable {
         var tagDto = new TagDto();
         BeanUtils.copyProperties(tagRequest, tagDto);
         tagService.save(tagDto);
-        model.addAttribute("message","New tag created successfully");
+        model.addAttribute("message", "New tag created successfully");
         return "redirect:/tag/show-all";
     }
 
     @GetMapping("/tag/show-all")
-    public String showAllTag(Model model){
-        model.addAttribute("pageTitle","Showing all Tags");
+    public String showAllTag(Model model) {
+        model.addAttribute("pageTitle", "Showing all Tags");
         model.addAttribute("tagResponse", tagService.show());
         return "tag/show_all";
     }
 
     @GetMapping("/tag/delete")
-    public String deleteTag(@RequestParam Long id, Model model){
+    public String deleteTag(@RequestParam Long id, Model model) {
         tagService.delete(id);
         model.addAttribute("message", "Tag deleted successfully");
         return "redirect:/tag/show-all";
     }
 
     @GetMapping("/tag/edit")
-    public String editTag(Model model, @RequestParam Long id){
+    public String editTag(Model model, @RequestParam Long id) {
         var tag = tagRepository.findById(id).get();
-        if(tag.getTotalUsed() > 0){
-            throw new ResourceAlreadyExistsException("This tag is currently using by "+ tag.getTotalUsed()+" questions");
+        if (tag.getTotalUsed() > 0) {
+            throw new ResourceAlreadyExistsException("This tag is currently using by " + tag.getTotalUsed() + " questions");
         }
         model.addAttribute("tagRequest", new TagRequest());
         model.addAttribute("id", id);
-        model.addAttribute("pageTitle","Update existing Tag");
+        model.addAttribute("pageTitle", "Update existing Tag");
         return "tag/edit";
     }
 
     @PostMapping("/tag/edit")
-    public String editTag(@ModelAttribute TagRequest tagRequest){
+    public String editTag(@ModelAttribute TagRequest tagRequest) {
         var tagDto = new TagDto();
-        BeanUtils.copyProperties(tagRequest,tagDto);
+        BeanUtils.copyProperties(tagRequest, tagDto);
         tagService.edit(tagDto);
         return "redirect:/tag/show-all";
     }

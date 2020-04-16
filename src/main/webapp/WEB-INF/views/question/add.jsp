@@ -6,6 +6,9 @@
 <!-- HEADER -->
 <jsp:include page="../common/header.jsp"/>
 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.js"></script>
+
 <!-- MAIN CONTENT OF THE PAGE -->
 <div class="container mt-4">
 
@@ -27,6 +30,11 @@
                     <div class="form-group">
                         <label>Description</label>
                         <form:textarea path="description" id="summernote" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Add up to 5 tags to describe what your question is about</label>
+                        <form:input path="tag" type="text" name="skill" id="skill" class="form-control" />
                     </div>
 
                     <div class="form-group">
@@ -157,5 +165,16 @@
         });
         $('#summernote').summernote('code', '');
     });
+
+
+    //tag suggestion for user
+    $('#skill').tokenfield({
+        autocomplete:{
+             source: [${tagList}],
+            delay:100
+        },
+            showAutocompleteOnFocus: true
+        }
+    );
 </script>
 

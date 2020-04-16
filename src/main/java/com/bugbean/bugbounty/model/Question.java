@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_question")
@@ -46,6 +47,10 @@ public class Question implements Serializable {
 
     @Column(name = "views")
     private long views = 0;
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Tag.class)
+    @JoinTable(name = "question_tag", joinColumns = @JoinColumn(name = "question_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private List<Tag> tags;
 
     public long getQuestionId() {
         return questionId;
@@ -127,4 +132,11 @@ public class Question implements Serializable {
         this.views = views;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
 }

@@ -47,7 +47,6 @@ public class QuestionRESTController extends BaseService {
         return serviceQuestion.getQuestionByUserRest(user, page, sortBy);
     }
 
-
     // QUESTION : LIKE_UNLIKE
 
     @PostMapping("/question/like")
