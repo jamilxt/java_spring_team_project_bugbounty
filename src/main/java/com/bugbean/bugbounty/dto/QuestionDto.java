@@ -4,6 +4,7 @@ import java.util.List;
 
 public class QuestionDto {
     List<String> attachments;
+    String tag;
     String title;
     String description;
 
@@ -30,5 +31,13 @@ public class QuestionDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

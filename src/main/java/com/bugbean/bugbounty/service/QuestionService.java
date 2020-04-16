@@ -3,13 +3,11 @@ package com.bugbean.bugbounty.service;
 import com.bugbean.bugbounty.dto.AnswerDto;
 import com.bugbean.bugbounty.dto.LikeDto;
 import com.bugbean.bugbounty.dto.QuestionDto;
-import com.bugbean.bugbounty.model.Answer;
-import com.bugbean.bugbounty.model.Like;
-import com.bugbean.bugbounty.model.Question;
-import com.bugbean.bugbounty.model.User;
+import com.bugbean.bugbounty.model.*;
 import com.bugbean.bugbounty.repository.AnswerRepository;
 import com.bugbean.bugbounty.repository.LikeRepository;
 import com.bugbean.bugbounty.repository.QuestionRepository;
+import com.bugbean.bugbounty.repository.TagRepository;
 import com.bugbean.bugbounty.request.AnswerRequest;
 import com.bugbean.bugbounty.request.QuestionRequest;
 import com.bugbean.bugbounty.request.QuestionHomepageRequest;
@@ -22,10 +20,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class QuestionService extends BaseService {
@@ -35,6 +31,8 @@ public class QuestionService extends BaseService {
     private AnswerRepository answerRepository;
     @Autowired
     private LikeRepository likeRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     public Page<Question> showAll(
             Optional<Integer> page,
@@ -93,7 +91,32 @@ public class QuestionService extends BaseService {
     public void save(QuestionDto questionDto, User user) {
         var questionEntity = new Question();
         BeanUtils.copyProperties(questionDto, questionEntity);
+        var tags = new ArrayList<String>(Arrays.asList(questionDto.getTag().split(", ")));
+        var tagSet = new HashSet<String>();
+        var tagList = new ArrayList<Tag>();
+        for (var t :
+                tags) {
+            tagSet.add(t);
+        }
+
+        for (var s :
+                tagSet) {
+            var tag = tagRepository.findByTag(s);
+            if (tag.isPresent()) {
+                tag.get().setTotalUsed(tag.get().getTotalUsed() + 1);
+                tagRepository.save(tag.get());
+                tagList.add(tag.get());
+            } else if(!s.isEmpty()){
+                var newTag = new Tag();
+                newTag.setTotalUsed(1);
+                newTag.setDateTime(LocalDateTime.now());
+                newTag.setTag(s);
+                tagList.add(newTag);
+                tagRepository.save(newTag);
+            }
+        }
         questionEntity.setUser(user);
+        questionEntity.setTags(tagList);
         questionRepository.save(questionEntity);
     }
 
@@ -184,6 +207,11 @@ public class QuestionService extends BaseService {
         Question question = singleQuestion(id).get();
         question.setViews(question.getViews() + 1);
         questionRepository.save(question);
+    }
+
+    public List<Tag> totalTagsOfQuestion(Question question) {
+        var tags = tagRepository.findByQuestions(question);
+        return tags;
     }
 
 }
