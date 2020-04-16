@@ -3,6 +3,7 @@ package com.bugbean.bugbounty.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_tag")
@@ -23,6 +24,9 @@ public class Tag implements Serializable {
 
     @Column(name = "totalUsed")
     private int totalUsed = 0;
+
+    @ManyToMany(mappedBy = "tags")
+    private List<Question> questions;
 
     public Tag() {
     }
@@ -67,6 +71,13 @@ public class Tag implements Serializable {
         this.totalUsed = totalUsed;
     }
 
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 
     @Override
     public String toString() {

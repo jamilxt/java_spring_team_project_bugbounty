@@ -78,6 +78,7 @@ public class User implements UserDetails, Serializable {
 
     @OneToMany(mappedBy = "to")
     private List<Follower> followers;
+
     @OneToMany(mappedBy = "from")
     private List<Follower> following;
 

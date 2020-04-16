@@ -105,6 +105,7 @@ public class QuestionController extends BaseService {
         model.addAttribute("totalLikes", serviceQuestion.totalLikesOfQuestion(question));
         model.addAttribute("isAlreadyLiked", serviceQuestion.isAlreadyLikedWithLikeId(question) > 0);
         model.addAttribute("relatedQuestions", serviceQuestion.relatedQuestion(question.getUser(), question.getQuestionId()));
+        model.addAttribute("tags", serviceQuestion.totalTagsOfQuestion(question));
         return "question/view";
     }
 

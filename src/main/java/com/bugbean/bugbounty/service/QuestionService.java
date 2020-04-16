@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -91,14 +92,27 @@ public class QuestionService extends BaseService {
         var questionEntity = new Question();
         BeanUtils.copyProperties(questionDto, questionEntity);
         var tags = new ArrayList<String>(Arrays.asList(questionDto.getTag().split(", ")));
+        var tagSet = new HashSet<String>();
         var tagList = new ArrayList<Tag>();
         for (var t :
                 tags) {
-            var tag = tagRepository.findByTag(t);
+            tagSet.add(t);
+        }
+
+        for (var s :
+                tagSet) {
+            var tag = tagRepository.findByTag(s);
             if (tag.isPresent()) {
                 tag.get().setTotalUsed(tag.get().getTotalUsed() + 1);
                 tagRepository.save(tag.get());
                 tagList.add(tag.get());
+            } else if(!s.isEmpty()){
+                var newTag = new Tag();
+                newTag.setTotalUsed(1);
+                newTag.setDateTime(LocalDateTime.now());
+                newTag.setTag(s);
+                tagList.add(newTag);
+                tagRepository.save(newTag);
             }
         }
         questionEntity.setUser(user);
@@ -193,6 +207,11 @@ public class QuestionService extends BaseService {
         Question question = singleQuestion(id).get();
         question.setViews(question.getViews() + 1);
         questionRepository.save(question);
+    }
+
+    public List<Tag> totalTagsOfQuestion(Question question) {
+        var tags = tagRepository.findByQuestions(question);
+        return tags;
     }
 
 }
