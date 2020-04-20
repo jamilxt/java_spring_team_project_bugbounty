@@ -41,7 +41,17 @@
             </div>
         </div>
     </div>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h6 class="font-weight-bold border-bottom pb-2 mb-3">Search Questions</h6>
 
+            <form class="form-group">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-warning btn-block pl-4 pr-4 pt-1 pb-1 mt-3" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
     <div class="card mb-3 d-none">
         <div class="card-body">
             <h6 class="font-weight-bold border-bottom pb-2">Popular Tags</h6>

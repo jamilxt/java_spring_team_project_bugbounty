@@ -5,9 +5,14 @@ import java.util.List;
 public class QuestionRequest {
 
     Long questionId;
-    List<String> attachments;
-    int commentCount;
+    String title;
+    List<String> tags;
+    String username;
+    String propic;
+    String created_at;
     int likeCount;
+    int answerCount;
+    long viewCount;
 
     public Long getQuestionId() {
         return questionId;
@@ -17,20 +22,44 @@ public class QuestionRequest {
         this.questionId = questionId;
     }
 
-    public List<String> getAttachments() {
-        return attachments;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAttachments(List<String> attachments) {
-        this.attachments = attachments;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPropic() {
+        return propic;
+    }
+
+    public void setPropic(String propic) {
+        this.propic = propic;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public int getLikeCount() {
@@ -41,4 +70,19 @@ public class QuestionRequest {
         this.likeCount = likeCount;
     }
 
+    public int getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
+    }
 }
