@@ -7,7 +7,7 @@ public class TagResponse implements Serializable {
     private Long id;
     private String tag;
     private String tagDescription;
-    private LocalDateTime dateTime;
+    private String created_at;
     private int totalUsed;
 
     public TagResponse() {
@@ -37,12 +37,12 @@ public class TagResponse implements Serializable {
         this.tagDescription = tagDescription;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public int getTotalUsed() {

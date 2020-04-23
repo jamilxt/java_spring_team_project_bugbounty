@@ -85,8 +85,8 @@ public class QuestionController extends BaseService {
             }
         }
         questionDto.setAttachments(questionAttachments);
-        serviceQuestion.save(questionDto, userEntity);
-        return "redirect:/questions";
+        Long savedQuestionId = serviceQuestion.save(questionDto, userEntity);
+        return "redirect:/questions/" + savedQuestionId;
     }
 
     // SINGLE QUESTION

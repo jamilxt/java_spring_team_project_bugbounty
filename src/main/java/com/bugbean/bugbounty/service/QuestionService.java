@@ -9,8 +9,8 @@ import com.bugbean.bugbounty.repository.LikeRepository;
 import com.bugbean.bugbounty.repository.QuestionRepository;
 import com.bugbean.bugbounty.repository.TagRepository;
 import com.bugbean.bugbounty.request.AnswerRequest;
-import com.bugbean.bugbounty.request.QuestionRequest;
 import com.bugbean.bugbounty.request.QuestionHomepageRequest;
+import com.bugbean.bugbounty.request.QuestionRequest;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +58,20 @@ public class QuestionService extends BaseService {
                 PageRequest.of(page.orElse(0), 10,
                         Sort.Direction.DESC, sortBy.orElse("questionId")))) {
             QuestionRequest questionRequest = new QuestionRequest();
-            questionRequest.setAttachments(question.getAttachments());
             questionRequest.setQuestionId(question.getQuestionId());
-            questionRequest.setCommentCount(totalAnswersOfQuestion(question));
+            questionRequest.setTitle(question.getTitle());
+            questionRequest.setUsername(question.getUser().getUsername());
+            questionRequest.setPropic(question.getUser().getPropic());
+            questionRequest.setCreated_at(new PrettyTime().format(new Date(Timestamp.valueOf(question.getCreated_at()).getTime())));
+            List<String> tags = new ArrayList<>();
+            for (Tag tag : tagRepository.findByQuestions(question)) {
+                tags.add(tag.getTag());
+            }
+            questionRequest.setTags(tags);
             questionRequest.setLikeCount(totalLikesOfQuestion(question));
+            questionRequest.setAnswerCount(totalAnswersOfQuestion(question));
+            questionRequest.setViewCount(question.getViews());
+
             questionRequests.add(questionRequest);
         }
         return questionRequests;
@@ -76,19 +86,24 @@ public class QuestionService extends BaseService {
             QuestionHomepageRequest questionHomepageRequest = new QuestionHomepageRequest();
             questionHomepageRequest.setQuestionId(question.getQuestionId());
             questionHomepageRequest.setTitle(question.getTitle());
-            questionHomepageRequest.setAnswerCount(totalAnswersOfQuestion(question));
-            questionHomepageRequest.setLikeCount(totalLikesOfQuestion(question));
-            questionHomepageRequest.setViewCount(Integer.parseInt(String.valueOf(question.getViews())));
+            List<String> tags = new ArrayList<>();
+            for (Tag tag : tagRepository.findByQuestions(question)) {
+                tags.add(tag.getTag());
+            }
+            questionHomepageRequest.setTags(tags);
             questionHomepageRequest.setUsername(question.getUser().getUsername());
             questionHomepageRequest.setPropic(question.getUser().getPropic());
             questionHomepageRequest.setCreated_at(new PrettyTime().format(new Date(Timestamp.valueOf(question.getCreated_at()).getTime())));
+            questionHomepageRequest.setAnswerCount(totalAnswersOfQuestion(question));
+            questionHomepageRequest.setLikeCount(totalLikesOfQuestion(question));
+            questionHomepageRequest.setViewCount(Integer.parseInt(String.valueOf(question.getViews())));
             questionHomepageRequests.add(questionHomepageRequest);
         }
         return questionHomepageRequests;
     }
 
 
-    public void save(QuestionDto questionDto, User user) {
+    public Long save(QuestionDto questionDto, User user) {
         var questionEntity = new Question();
         BeanUtils.copyProperties(questionDto, questionEntity);
         var tags = new ArrayList<String>(Arrays.asList(questionDto.getTag().split(", ")));
@@ -106,7 +121,7 @@ public class QuestionService extends BaseService {
                 tag.get().setTotalUsed(tag.get().getTotalUsed() + 1);
                 tagRepository.save(tag.get());
                 tagList.add(tag.get());
-            } else if(!s.isEmpty()){
+            } else if (!s.isEmpty()) {
                 var newTag = new Tag();
                 newTag.setTotalUsed(1);
                 newTag.setDateTime(LocalDateTime.now());
@@ -117,7 +132,8 @@ public class QuestionService extends BaseService {
         }
         questionEntity.setUser(user);
         questionEntity.setTags(tagList);
-        questionRepository.save(questionEntity);
+        Question savedQuestion = questionRepository.save(questionEntity);
+        return savedQuestion.getQuestionId();
     }
 
     public void deleteQuestion(Long id) {

@@ -1,15 +1,18 @@
 package com.bugbean.bugbounty.request;
 
+import java.util.List;
+
 public class QuestionHomepageRequest {
 
     Long questionId;
     String title;
-    int answerCount;
-    int likeCount;
-    int viewCount;
+    List<String> tags;
     String username;
     String propic;
     String created_at;
+    int likeCount;
+    int answerCount;
+    long viewCount;
 
     public Long getQuestionId() {
         return questionId;
@@ -27,28 +30,12 @@ public class QuestionHomepageRequest {
         this.title = title;
     }
 
-    public int getAnswerCount() {
-        return answerCount;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setAnswerCount(int answerCount) {
-        this.answerCount = answerCount;
-    }
-
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getUsername() {
@@ -75,4 +62,27 @@ public class QuestionHomepageRequest {
         this.created_at = created_at;
     }
 
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public int getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
+    }
+
+    public long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(long viewCount) {
+        this.viewCount = viewCount;
+    }
 }

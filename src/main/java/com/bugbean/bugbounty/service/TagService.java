@@ -1,15 +1,20 @@
 package com.bugbean.bugbounty.service;
+
 import com.bugbean.bugbounty.config.exception.ResourceAlreadyExistsException;
 import com.bugbean.bugbounty.dto.TagDto;
 import com.bugbean.bugbounty.model.Tag;
 import com.bugbean.bugbounty.repository.TagRepository;
 import com.bugbean.bugbounty.response.TagResponse;
+import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,26 +25,24 @@ public class TagService implements Serializable {
 
     public void save(TagDto tagDto) throws Exception {
         var check = tagRepository.findByTag(tagDto.getTag());
-        if (check.isEmpty()){
+        if (check.isEmpty()) {
             var tag = new Tag();
             tag.setTag(tagDto.getTag());
             tag.setTagDescription(tagDto.getTagDescription());
             tag.setDateTime(LocalDateTime.now());
             tagRepository.save(tag);
-        }
-        else {
+        } else {
             throw new ResourceAlreadyExistsException("This tag already used");
         }
 
     }
 
-    public List<TagResponse> show()
-    {
+    public List<TagResponse> show() {
         var allTag = new ArrayList<TagResponse>();
         tagRepository.findAll().forEach(tag -> {
             var tagResponse = new TagResponse();
             tagResponse.setId(tag.getId());
-            tagResponse.setDateTime(tag.getDateTime());
+            tagResponse.setCreated_at(new PrettyTime().format(new Date(Timestamp.valueOf(tag.getDateTime()).getTime())));
             tagResponse.setTag(tag.getTag());
             tagResponse.setTagDescription(tag.getTagDescription());
             tagResponse.setTotalUsed(tag.getTotalUsed());
@@ -48,25 +51,26 @@ public class TagService implements Serializable {
         return allTag;
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         var tag = tagRepository.findById(id).get();
-        if(tag.getTotalUsed() > 0){
-            throw new ResourceAlreadyExistsException("This tag is currently using by "+ tag.getTotalUsed()+" questions");
+        if (tag.getTotalUsed() > 0) {
+            throw new ResourceAlreadyExistsException("This tag is currently using by " + tag.getTotalUsed() + " questions");
         }
         tagRepository.deleteById(id);
     }
-    public void edit(TagDto tagDto){
+
+    public void edit(TagDto tagDto) {
 
         var tag = tagRepository.findById(tagDto.getId()).get();
-        if(tag.getTotalUsed() > 0){
-            throw new ResourceAlreadyExistsException("This tag is currently using by "+ tag.getTotalUsed()+" questions");
+        if (tag.getTotalUsed() > 0) {
+            throw new ResourceAlreadyExistsException("This tag is currently using by " + tag.getTotalUsed() + " questions");
         }
         tag.setTagDescription(tagDto.getTagDescription());
         tag.setTag(tagDto.getTag());
         tagRepository.save(tag);
     }
 
-    public String tagString(){
+    public String tagString() {
         ArrayList<String> list = new ArrayList<String>();
         tagRepository.findAll().forEach(tag -> {
             list.add(tag.getTag());
@@ -74,9 +78,8 @@ public class TagService implements Serializable {
 
         String listString = "";
 
-        for (String s : list)
-        {
-            listString += "'" +s+ "'" + ",";
+        for (String s : list) {
+            listString += "'" + s + "'" + ",";
         }
         return listString;
     }
