@@ -7,22 +7,6 @@
 
 <!-- GLOBAL HEADER -->
 <jsp:include page="common/header.jsp"/>
-<style>
-    .nav-pills .nav-link {
-        border-radius: 0;
-        color: #a0a0a0;
-        padding-top: 15px;
-        margin-left: 30px;
-        margin-right: 30px;
-        font-size: small;
-    }
-
-    .nav-pills .nav-link.active {
-        color: black;
-        border-top: 2px solid;
-        background: none;
-    }
-</style>
 
 <div class="backgroundWrap">
     <img src="/images/course_cover.jpg">
@@ -30,7 +14,7 @@
 </div>
 
 <!-- MAIN CONTENT OF THE PAGE -->
-<div class="container mt-5">
+<div class="container mt-5 pl-0">
 
     <div class="media pt-5 pb-5">
 
@@ -70,60 +54,75 @@
 
         <div class="col-8">
 
-            <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <ul class="nav nav-pills nav-justified mb-3 font-weight-bold" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                       aria-controls="pills-home" aria-selected="true">Recent</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-none" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                       role="tab"
+                       aria-controls="pills-profile" aria-selected="false">Most Voted</a>
+                </li>
+            </ul>
 
+<%--            <ul class="list-group list-group-flush d-none">--%>
+<%--                <li class="list-group-item">--%>
+<%--                    <div class="media pt-3 pb-3">--%>
+<%--                        <div style="width: 60px">--%>
+<%--                            <div class="row-4 small text-center">13<br>--%>
+<%--                                <i class="fa fa-sm fa-thumbs-up text-secondary"></i>--%>
+<%--                            </div>--%>
+<%--                            <div class="row-4 small text-center mt-3">83<br>--%>
+<%--                                <i class="fa fa-sm fa-comment text-secondary"></i>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                        <div class="media-body ml-2 pl-4 border-left ">--%>
+<%--                            <div>--%>
+<%--                                <a href="/p/3" class="text-dark font-weight-bold">Question Title</a>--%>
+<%--                            </div>--%>
+<%--                            <div class="">--%>
+<%--                                <a href="/questions/tagged/java" class="badge badge-warning p-2 mt-2">java</a>--%>
+<%--                            </div>--%>
+<%--                            <div class="media text-right mt-3">--%>
+<%--                                <div class="media-body">--%>
+<%--                                    <a href="/" class="text-dark small font-weight-bold"></a>--%>
+<%--                                    <h6 class="text-secondary small">2 views · 2 hours ago</h6>--%>
+<%--                                </div>--%>
+<%--                                <a href="/" class="font-weight-bold text-dark ml-3">--%>
+<%--                                    <img src="/images/" class="rounded-circle border border-light align-middle"--%>
+<%--                                         width="40px" height="40px">--%>
+<%--                                </a>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </li>--%>
+<%--            </ul>--%>
 
-                    <%--            <div class="card card-body">--%>
-                    <div class="row" id="load_posts">
+            <ul class="list-group list-group-flush">
+                <div id="load_posts"></div>
+            </ul>
+            <div id="load_data_message"></div>
 
-                        <%-- POSTS --%>
-                        <%--                <c:forEach items="${user.questions}" var="question">--%>
-                        <%--                    <div class="col-4 mb-4">--%>
-                        <%--                        <div class="imgHoverContainer w-100 h-100 ">--%>
-                        <%--                            <a href="/p/${question.postId}">--%>
-                        <%--                                <img src="/images/${question.images[0]}" class="w-100 h-100 imgHoverImage">--%>
-                        <%--                                <div class="imgHoverMiddle">--%>
-                        <%--                                        &lt;%&ndash;                                        ${fn:length(question.answers)}&ndash;%&gt;--%>
-                        <%--                                    <div class="imgHoverText">--%>
-                        <%--                                        <i class="fa fa-1x fa-heart nav-item"></i> 0--%>
-                        <%--                                        <i class="fa fa-1x fa-answer nav-item ml-4"></i> 0--%>
-                        <%--                                    </div>--%>
-                        <%--                                </div>--%>
-                        <%--                            </a>--%>
-                        <%--                            <c:if test="${fn:length(question.images) > 1}">--%>
-                        <%--                                <div class="multipleImage"><i class="fa fa-1x fa-clone nav-item text-white"></i></div>--%>
-                        <%--                            </c:if>--%>
-                        <%--                        </div>--%>
-                        <%--                    </div>--%>
-                        <%--                </c:forEach>--%>
-
-                    </div>
-                    <div id="load_data_message"></div>
-
-                    <c:if test="${totalPosts == 0}">
-                        <div class="text-center text-muted mt-5">
-                            <i class="fa fa-4x fa-table nav-item"></i>
-                            <h4>
-                                Posts of
-                                <c:choose>
-                                    <c:when test="${user.username == authUser.username}">yours</c:when>
-                                    <c:otherwise>${user.username}</c:otherwise>
-                                </c:choose>
-                            </h4>
-                            <small>No Post Available</small>
-                        </div>
-                    </c:if>
-                    <%--            </div>--%>
+            <c:if test="${totalPosts == 0}">
+                <div class="text-center text-muted mt-5">
+                    <i class="fa fa-4x fa-table nav-item"></i>
+                    <h4>
+                        Questions of
+                        <c:choose>
+                            <c:when test="${user.username == authUser.username}">yours</c:when>
+                            <c:otherwise>${user.username}</c:otherwise>
+                        </c:choose>
+                    </h4>
+                    <small>No Question Available</small>
                 </div>
-
-            </div>
-
+            </c:if>
+            <%--            </div>--%>
         </div>
 
         <div class="col-4 pr-0">
 
-            <div class="d-flex text-white text-center  font-weight-bold">
+            <div class="d-flex text-white font-weight-bold">
                 <div class="pr-5">
                     <h5 class="font-weight-bold">${totalPosts}</h5>
                     <small class="text-white-50 font-weight-bold">Question${totalPosts > 1 ? 's' : ''}</small>
@@ -193,20 +192,42 @@
             var post_data = '';
             $.each(data, function (key, value) {
 
-                var multipleImages = value.attachments.length > 1;
+                post_data += '<li class="list-group-item">';
+                post_data += '<div class="media pt-3 pb-3">';
+                post_data += '<div style="width: 60px">';
+                post_data += '<div class="row-4 small text-center">' + value.likeCount + '<br>';
+                post_data += '<i class="fa fa-sm fa-thumbs-up text-secondary"></i>';
+                post_data += '</div>';
+                post_data += '<div class="row-4 small text-center mt-3">' + value.answerCount + '<br>';
+                post_data += '<i class="fa fa-sm fa-comment text-secondary"></i>';
+                post_data += '</div>';
+                post_data += '</div>';
 
-                post_data += '<div class="col-4 mb-4"><div class="imgHoverContainer w-100 align-content-center" style="height: 300px">';
-                post_data += '<a href="/questions/' + value.questionId + '">';
-                post_data += '<img src="/images/' + value.attachments[0] + '" class="w-100 imgHoverImage h-100" height="300px">';
-                post_data += '<div class="imgHoverMiddle"><div class="imgHoverText">';
-                post_data += '<i class="fa fa-1x fa-heart nav-item"></i> ' + value.likeCount + ' <i class="fa fa-1x fa-answer nav-item ml-4"></i> ' + value.commentCount + '';
-                post_data += '</div></div></a>';
+                post_data += '<div class="media-body ml-2 pl-4 border-left ">';
+                post_data += '<div>';
+                post_data += '<a href="/questions/' + value.questionId + '" class="text-dark font-weight-bold">' + value.title + '</a>';
+                post_data += '</div>';
+                post_data += '<div class="">';
 
-                if (multipleImages) {
-                    post_data += '<div class="multipleImage"><i class="fa fa-1x fa-clone nav-item text-white"></i></div>';
-                }
+                $.each(value.tags, function (key, value) {
+                    post_data += '<a href="/questions/tagged/' + value + '" class="badge badge-warning p-2 mt-2 mr-1">' + value + '</a>';
+                })
 
-                post_data += '</div></div>';
+                post_data += '</div>';
+
+                post_data += '<div class="media text-right mt-3">';
+                post_data += '<div class="media-body">';
+                post_data += '<a href="' + value.username + '" class="text-dark small font-weight-bold">' + value.username + '</a>';
+                post_data += '<h6 class="text-secondary small">' + value.viewCount + ' views · ' + value.created_at + '</h6>';
+                post_data += '</div>';
+                post_data += '<a href="' + value.username + '" class="font-weight-bold text-dark ml-3">';
+                post_data += '<img src="/images/' + value.propic + '" class="rounded-circle border border-light align-middle" width="40px" height="40px">';
+                post_data += '</a>';
+                post_data += '</div>';
+
+                post_data += '</div>';
+                post_data += '</div>';
+                post_data += '</li>';
 
             });
 

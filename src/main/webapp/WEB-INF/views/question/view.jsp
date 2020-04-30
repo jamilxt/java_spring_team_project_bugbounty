@@ -47,9 +47,8 @@
                             </div>
                             <div class="">
                                 <c:forEach items="${tags}" var="tag">
-                                    <a href="#" class="badge badge-warning p-2 mt-2">${tag.tag}</a>
+                                    <a href="/questions/tagged/${tag.tag}" class="badge badge-warning p-2 mt-2">${tag.tag}</a>
                                 </c:forEach>
-
                             </div>
                             <div class="media text-right mt-3">
                                 <div class="media-body">
@@ -139,7 +138,7 @@
 
         <div class="col-4 pr-0">
 
-            <a href="/questions" class="btn btn-outline-light pl-4 pr-4 pt-1 pb-1 btn-block mb-4"><small
+            <a href="/" class="btn btn-outline-light pl-4 pr-4 pt-1 pb-1 btn-block mb-4"><small
                     class="font-weight-bold">BACK TO
                 QUESTIONS</small></a>
 
@@ -190,7 +189,7 @@
                 answer_data += '<span class="text-muted font-weight-bold small">0</span><br>';
                 answer_data += '<i class="fa fa-1x fa-caret-up text-muted}"></i>';
                 answer_data += '</button>';
-                answer_data += '<button class="btn btn-light btn-block d-none" disabled>';
+                answer_data += '<button class="btn btn-light btn-block" disabled>';
                 answer_data += '<i class="fa fa-sm fa-check text-muted"></i>';
                 answer_data += '</button>';
                 answer_data += '</div>';

@@ -209,3 +209,8 @@ input {
     position: fixed;
     overflow-y: scroll;
 }
+
+.nav-pills .nav-link.active {
+    background: #ffc107;
+    color: black;
+}

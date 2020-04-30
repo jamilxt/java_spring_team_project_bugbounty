@@ -1,26 +1,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- GLOBAL HEADER -->
 <jsp:include page="../common/header.jsp"/>
 
-<br><br><br>
-<div class="container">
-    <H1>Insert a new Tag <span><a class="btn btn-success"
-                                  href="${pageContext.request.contextPath}/createTag">Add</a></span></H1>
+<!-- MAIN CONTENT OF THE PAGE -->
+<div class="container mt-4 p-0">
+    <h3 class="mb-3 text-white">Tags</h3>
     <div class="row">
         <c:forEach items="${tagResponse}" var="tag">
-            <div class="card" style="width: 15rem;">
-                <div class="card-body">
-                    <h5 class="card-title btn btn-outline-info">${tag.tag}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">${tag.totalUsed} questions</h6>
-                    <p class="card-text">${tag.tagDescription}</p>
-                    <a href="${pageContext.request.contextPath}/tag/delete?id=${tag.id}"
-                       class="card-link btn btn-outline-danger">Delete</a>
-                    <a href="${pageContext.request.contextPath}/tag/edit?id=${tag.id}"
-                       class="card-link btn btn-outline-warning">Edit</a>
+            <div class="col-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <a href="/questions/tagged/${tag.tag}" class="badge badge-warning p-2">${tag.tag}</a>
+                        <div class="small mt-2" style="height: 60px">
+                                ${tag.tagDescription}
+                        </div>
+                        <div class="row small">
+                            <div class="col">${tag.totalUsed} questions</div>
+                            <div class="col"><span class="float-right">Created ${tag.created_at}</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </c:forEach>
 
     </div>
 </div>
-<br><br><br>
+
+<!-- GLOBAL FOOTER -->
 <jsp:include page="../common/footer.jsp"/>
