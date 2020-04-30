@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
     <link rel="stylesheet"
           href="/css/main.css"/>
-
+    <link rel="stylesheet"
+          href="/css/users.css"/>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
@@ -55,10 +56,12 @@
                     <a href="/" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Questions</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="${pageContext.request.contextPath}/tag/show-all" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Tags</a>
+                    <a href="${pageContext.request.contextPath}/tag/show-all"
+                       class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Tags</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="#" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Users</a>
+                    <a href="${pageContext.request.contextPath}/users"
+                       class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Users</a>
                 </li>
             </ul>
 

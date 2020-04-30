@@ -122,4 +122,8 @@ public class UserService extends BaseService implements UserDetailsService {
         return followerRepository.countFollowerByFrom(user);
     }
 
+    public List<User> userList() {
+        return userRepository.findAll();
+    }
+
 }
