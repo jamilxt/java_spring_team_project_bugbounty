@@ -7,6 +7,10 @@ import com.bugbean.bugbounty.repository.TagRepository;
 import com.bugbean.bugbounty.response.TagResponse;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,18 +41,18 @@ public class TagService implements Serializable {
 
     }
 
-    public List<TagResponse> show() {
-        var allTag = new ArrayList<TagResponse>();
-        tagRepository.findAll().forEach(tag -> {
-            var tagResponse = new TagResponse();
-            tagResponse.setId(tag.getId());
-            tagResponse.setCreated_at(new PrettyTime().format(new Date(Timestamp.valueOf(tag.getDateTime()).getTime())));
-            tagResponse.setTag(tag.getTag());
-            tagResponse.setTagDescription(tag.getTagDescription());
-            tagResponse.setTotalUsed(tag.getTotalUsed());
-            allTag.add(tagResponse);
-        });
-        return allTag;
+    public Page<Tag> show(String search, int pageIndex, int row, String sort) {
+
+        Pageable pageWithElements;
+        if (sort.equals("Sort By Name")) {
+            pageWithElements = PageRequest.of(pageIndex, row, Sort.by("tag").ascending());
+        } else if (sort.equals("Sort By Popularity")) {
+            pageWithElements = PageRequest.of(pageIndex, row, Sort.by("totalUsed").descending());
+        } else {
+            pageWithElements = PageRequest.of(pageIndex, row, Sort.by("dateTime").descending());
+        }
+        var t = tagRepository.findByTagContaining(search, pageWithElements);
+        return t;
     }
 
     public void delete(Long id) {

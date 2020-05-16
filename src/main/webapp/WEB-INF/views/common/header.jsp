@@ -56,7 +56,7 @@
                     <a href="/" class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Questions</a>
                 </li>
                 <li class="nav-item mr-3">
-                    <a href="${pageContext.request.contextPath}/tag/show-all"
+                    <a href="${pageContext.request.contextPath}/tag/show-all?_search=&_pageIndex=0&_row=6&_sort=Sort By Name"
                        class="btn btn-outline-secondary pl-2 pr-2 pt-1 pb-1 text-white">Tags</a>
                 </li>
                 <li class="nav-item mr-3">

@@ -9,6 +9,7 @@ public class TagResponse implements Serializable {
     private String tagDescription;
     private String created_at;
     private int totalUsed;
+    private int totalPage;
 
     public TagResponse() {
     }
@@ -51,5 +52,13 @@ public class TagResponse implements Serializable {
 
     public void setTotalUsed(int totalUsed) {
         this.totalUsed = totalUsed;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
     }
 }
