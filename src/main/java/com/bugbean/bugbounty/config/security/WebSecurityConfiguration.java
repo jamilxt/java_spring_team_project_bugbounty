@@ -13,8 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private final PasswordEncoder passwordEncoder;
+    
+     private final PasswordEncoder passwordEncoder;
 
     private final UserDetailsService userDetailsService;
     private final CustomAuthSuccessHandler customAuthSuccessHandler;
@@ -40,7 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         // We are permitting all static resources to be accessed publicly
         http
                 .authorizeRequests()
-                .antMatchers("/images/**", "/css/**", "/js/**", "/login", "/signup", "/users/is_available").permitAll()
+                .antMatchers("/images/**", "/css/**", "/js/**", "/login", "/signup", "/signup-processing", "/users/is_available").permitAll()
                 // We are restricting endpoints for individual roles.
                 // Only users with allowed roles will be able to access individual endpoints.
                 .and()

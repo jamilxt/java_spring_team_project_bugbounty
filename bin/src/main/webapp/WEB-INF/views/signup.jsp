@@ -17,7 +17,7 @@
     <div class="card card-body">
         <c:if test="${pageContext.request.userPrincipal.name == null}">
             <h3 class="font-weight-bolder">Sign up</h3>
-            <h6 class="pb-4 small">Already have an account? <a href="/login">Log in</a></h6>
+            <h6 class="pb-4 small">Already have an account? <a href="${pageContext.request.contextPath }/login">Log in</a></h6>
 
             <c:if test="${error == 'true'}">
                 <div class="alert alert-danger" role="alert" id="success-alert">Wrong username or
@@ -25,7 +25,7 @@
                 </div>
             </c:if>
 
-            <form:form action="/signup-processing"
+            <form:form action="${pageContext.request.contextPath }/signup-processing"
                        modelAttribute="user">
 
                 <div class="form-group">

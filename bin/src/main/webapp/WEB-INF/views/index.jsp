@@ -26,7 +26,7 @@
                     <div class="row mt-4 mb-4">
 
                         <div class="col-4">
-                            <a href="/questions/ask" class="btn btn-warning pl-4 pr-4 pt-1 pb-1">
+                            <a href="${pageContext.request.contextPath}/questions/ask" class="btn btn-warning pl-4 pr-4 pt-1 pb-1">
                                 <small class="font-weight-bold">NEW QUESTION</small>
                             </a>
                         </div>
