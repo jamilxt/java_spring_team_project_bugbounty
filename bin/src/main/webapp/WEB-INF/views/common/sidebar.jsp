@@ -34,9 +34,9 @@
             <%--                        <h6 class="small">0 XP</h6>--%>
             <%--                    </div>--%>
             <div class="mt-3">
-                <a href="/accounts/edit" class="btn btn-warning btn-block pl-4 pr-4 pt-1 pb-1 mt-2"><small
+                <a href="${root}/accounts/edit" class="btn btn-warning btn-block pl-4 pr-4 pt-1 pb-1 mt-2"><small
                         class="font-weight-bold">EDIT PROFILE</small></a>
-                <a href="/logout" class="btn btn-secondary btn-block pl-4 pr-4 pt-1 pb-1 mt-2"><small
+                <a href="${root}/logout" class="btn btn-secondary btn-block pl-4 pr-4 pt-1 pb-1 mt-2"><small
                         class="font-weight-bold">SIGN OUT</small></a>
             </div>
         </div>
