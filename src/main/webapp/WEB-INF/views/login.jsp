@@ -17,7 +17,7 @@
     <div class="card card-body">
         <c:if test="${pageContext.request.userPrincipal.name == null}">
             <h3 class="font-weight-bolder">Log in</h3>
-            <h6 class="pb-4 small">Don't have an account? <a href="/signup">Sign Up</a></h6>
+            <h6 class="pb-4 small">Don't have an account? <a href="${pageContext.servletContext.contextPath}/signup">Sign Up</a></h6>
 
             <c:if test="${error == 'true'}">
                 <div class="alert alert-danger">Wrong username or

@@ -17,7 +17,7 @@
     <div class="card card-body">
         <c:if test="${pageContext.request.userPrincipal.name == null}">
             <h3 class="font-weight-bolder">Sign up</h3>
-            <h6 class="pb-4 small">Already have an account? <a href="/login">Log in</a></h6>
+            <h6 class="pb-4 small">Already have an account? <a href="${root}/login">Log in</a></h6>
 
             <c:if test="${error == 'true'}">
                 <div class="alert alert-danger" role="alert" id="success-alert">Wrong username or
@@ -25,8 +25,8 @@
                 </div>
             </c:if>
 
-            <form:form action="/signup-processing"
-                       modelAttribute="user">
+            <form:form action="${root}/signup-processing"
+                       modelAttribute="user" method="post">
 
                 <div class="form-group">
                     <label for="username" class="small font-weight-bold">Username <span id="Result"></span></label>
@@ -57,7 +57,7 @@
 
 
                 <input type="submit" name="submit" value="Sign up"
-                       class="btn btn-warning btn-block" id="btnSubmit" disabled>
+                       class="btn btn-warning btn-block" id="btnSubmit">
 
                 <h6 class="text-muted text-center font-weight-bold mt-3 small">
                     By signing up, you agree to our <a href="/terms">Terms</a>, <a href="/data_policy">Data Policy</a>
